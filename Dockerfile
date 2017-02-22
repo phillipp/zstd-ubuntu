@@ -62,14 +62,12 @@ RUN cd /build/root \
     && mkdir \
         etc/init \
         etc/logrotate.d \
-        etc/nginx/sites-available \
-        etc/nginx/sites-enabled \
         var/lib \
         var/lib/nginx \
         usr/sbin \
     && mv usr/share/nginx/nginx/sbin/nginx usr/sbin/nginx && rm -rf usr/share/nginx/nginx/sbin \
     && mv usr/share/nginx/nginx/html usr/share/nginx/html && rm -rf usr/share/nginx/nginx \
-    && rm etc/nginx/*.default \
+    && rm -rf etc/nginx \
     && cp /build/nginx-scripts/upstart.conf etc/init/nginx.conf \
     && cp /build/nginx-conf/logrotate etc/logrotate.d/nginx \
     && cp /build/nginx-conf/nginx.conf etc/nginx/nginx.conf \
