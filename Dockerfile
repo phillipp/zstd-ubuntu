@@ -69,9 +69,7 @@ RUN cd /build/root \
     && mv usr/share/nginx/nginx/html usr/share/nginx/html && rm -rf usr/share/nginx/nginx \
     && rm -rf etc/nginx \
     && cp /build/nginx-scripts/upstart.conf etc/init/nginx.conf \
-    && cp /build/nginx-conf/logrotate etc/logrotate.d/nginx \
-    && cp /build/nginx-conf/nginx.conf etc/nginx/nginx.conf \
-    && cp /build/nginx-conf/default etc/nginx/sites-available/default
+    && cp /build/nginx-conf/logrotate etc/logrotate.d/nginx
 
 # Build deb
 RUN fpm -s dir -t deb \
