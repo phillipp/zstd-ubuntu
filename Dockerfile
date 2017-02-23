@@ -1,8 +1,5 @@
 FROM ubuntu:trusty-20170119
 
-ARG DEB_VERSION
-ARG DEB_PACKAGE
-
 # Required system packages
 RUN apt-get update \
     && apt-get install -y \
@@ -19,6 +16,9 @@ RUN apt-get update \
 
 RUN mkdir -p /build/root
 WORKDIR /build
+
+ARG DEB_VERSION
+ARG DEB_PACKAGE
 
 # Download packages
 RUN wget -O zstd-$DEB_VERSION.tar.gz https://github.com/facebook/zstd/archive/v$DEB_VERSION.tar.gz \
