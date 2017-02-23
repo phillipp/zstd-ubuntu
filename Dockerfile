@@ -1,5 +1,10 @@
 FROM ubuntu:trusty-20170119
 
+ARG DEB_MAJOR
+ARG DEB_MINOR
+ARG DEB_VERSION
+ARG DEB_PACKAGE
+
 # Required system packages
 RUN apt-get update \
     && apt-get install -y \
@@ -18,15 +23,15 @@ RUN mkdir -p /build/root
 WORKDIR /build
 
 # Download packages
-RUN wget -q https://openresty.org/download/openresty-1.11.2.2.tar.gz \
-    && tar xfz openresty-1.11.2.2.tar.gz
+RUN wget https://openresty.org/download/openresty-$DEB_VERSION.tar.gz \
+    && tar xfz openresty-$DEB_VERSION.tar.gz
 
 ADD patches/* /tmp/patches/
 
 # Compile and install openresty
-RUN cd /build/openresty-1.11.2.2 \
-    && patch -p1 bundle/nginx-1.11.2/src/http/modules/ngx_http_static_module.c < /tmp/patches/openresty-static.patch \
-    && patch -p1 bundle/nginx-1.11.2/src/http/modules/ngx_http_upstream_keepalive_module.c < /tmp/patches/nginx-upstream-ka-pooling.patch \
+RUN cd /build/openresty-$DEB_VERSION \
+    && patch -p1 bundle/nginx-$DEB_MAJOR/src/http/modules/ngx_http_static_module.c < /tmp/patches/openresty-static.patch \
+    && patch -p1 bundle/nginx-$DEB_MAJOR/src/http/modules/ngx_http_upstream_keepalive_module.c < /tmp/patches/nginx-upstream-ka-pooling.patch \
     && ./configure \
         --prefix=/usr/share/nginx \
         -j6 \
@@ -74,7 +79,7 @@ RUN cd /build/root \
 # Build deb
 RUN fpm -s dir -t deb \
     -n openresty \
-    -v 1.11.2.2-trafficplex2 \
+    -v $DEB_VERSION-$DEB_PACKAGE \
     -C /build/root \
     -p openresty_VERSION_ARCH.deb \
     --description 'a high performance web server and a reverse proxy server' \
