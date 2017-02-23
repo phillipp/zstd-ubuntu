@@ -1,8 +1,0 @@
-207,209c207,209
-<     if (r->method == NGX_HTTP_POST) {
-<         return NGX_HTTP_NOT_ALLOWED;
-<     }
----
->     // if (r->method == NGX_HTTP_POST) {
->     //     return NGX_HTTP_NOT_ALLOWED;
->     // }
