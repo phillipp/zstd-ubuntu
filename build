@@ -13,5 +13,5 @@ CONTAINER=$(docker create openresty-bundle-deb)
 if [ ! -d ./artifacts ]; then
     mkdir ./artifacts
 fi
-docker cp $CONTAINER:/build/openresty_$DEB_VERSION-$DEB_PACKAGE.deb ./artifacts/
+docker cp $CONTAINER:/build/openresty_$DEB_VERSION-${DEB_PACKAGE}_amd64.deb ./artifacts/
 docker rm $CONTAINER
